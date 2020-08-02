@@ -1,0 +1,135 @@
+{% load static %}
+
+
+<!doctype html>
+
+<html lang="pt">
+  <head>
+  	<title>Bolão Futebol e Clubismo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="p-4 pt-5">
+		  		<a href="index.html" class="img logo rounded-circle mb-5" style="background-image: url(static/images/logo1.jpg);"></a>
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="index.html">Resultados</a>
+	          </li>
+	          <li>
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Palpitar</a>
+              <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li>
+                    <a href="prox_rodada.html">Próxima Rodada</a>
+                </li>
+                <li>
+                    <a href="rodada_seguinte.html">Rodada 2</a>
+                </li>
+                <li>
+                    <a href="rodada_depois.html">Rodada 3</a>
+                </li>
+              </ul>
+	          </li>
+	          <li>
+              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Classificação</a>
+	            <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="classificacao_mes.html">Mês Atual</a>
+                    </li>
+                    <li>
+                        <a href="classificacao_rodada.html">Última Rodada</a>
+                    </li>
+                    <li>
+                        <a href="classificacao_geral.html">Geral</a>
+                    </li>
+	            </ul>
+	          </li>
+	          <li>
+              <a href="galeria_campeoes.html">Galeria de Campeões</a>
+            </li>
+            <li>
+              <a href="regulamento.html">Regulamento</a>
+            </li>
+	        </ul>
+
+	        <div class="footer">
+	        	<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+						  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+	        </div>
+
+	      </div>
+    	</nav>
+
+
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Resultados</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="prox_rodada.html">Palpitar</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="classificacao_mes.html">Classificação</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="galeria_campeoes.html">Galeria de Campeões</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+            </nav>
+            
+      <h2 class="mb-4" style="text-align:center">{{rodada}}</h2>  
+        {{tabela|safe}}  
+      <!--div id="results"></div>
+        <script>
+
+          var taable = "{{tabela}}";
+          var i;
+          for (i = 0; i < 5; i++) {
+            results = document.getElementById("results");
+            results.innerHTML = taable;
+            results.innerHTML =    results.textContent;
+            document.write(i);
+            document.write(results.innerHTML);
+          }
+          //document.write(taable);
+        </script--> 
+        
+      
+      
+          <!--div class="container" id="ff-compose"></div>
+                <script async defer src="https://formfacade.com/include/101835075140478997061/form/1FAIpQLSdBOBOfTvAvJV3WT2drRnPF1wxP92tu7n21RiH2rNB9myGzBg/bootstrap.js?div=ff-compose"></script-->
+    
+                  
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
