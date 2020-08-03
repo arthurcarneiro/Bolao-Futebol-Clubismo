@@ -5,7 +5,7 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Evento Teste 2"
+RODADA = "Evento Teste"
 MES = "Agosto/2020"
 
 # Create your views here.
@@ -39,9 +39,11 @@ def classificacao_mes(request):
     classificacao_mes_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', MES)
     
     valores = list(classificacao_mes_sheet.get('A2:G'))
-    
-    classificacao_mes = DataFrame(valores,columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
+    valores = [[x if x == a[0] else int(x) for x  in a] for a in valores]
+
+    classificacao_mes = DataFrame(valores),columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     classificacao_mes = classificacao_mes.sort_values(by=['Pontos Totais', '10 pontos', '7 pontos', '0 pontos', '5 pontos', '2 pontos'],ascending=[0,0,0,1,0,0])
+    
     classificacao_mes.index = [i+1 for i in range(0, len(classificacao_mes.values))]
     
     classificacao_mes = classificacao_mes.to_html()
