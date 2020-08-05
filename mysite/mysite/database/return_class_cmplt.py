@@ -29,7 +29,7 @@ def return_class_cmplt(nomes_dict, classificacao):
     
     Pontos_df = DataFrame(pontos_detalhados, columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     '''Formado o dataframe Pontos_df com os pontos por participante organizado em colunas.'''
-    print(Pontos_df)
+    
     #classificacao_completa = concat([classificacao,Pontos_df], axis=1)
     ''' O dataframe classificacao é concatenado com Pontos_df para formar a classificação completa
         Com todos os critérios de desempate especificados, entretanto não ordenados.'''

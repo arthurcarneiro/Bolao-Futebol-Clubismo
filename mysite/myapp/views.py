@@ -13,6 +13,8 @@ def index(request):
     content = {}
     gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','gabarito', RODADA)
     resultados_html = return_games(gabarito_sheet.col_values(1), gabarito_sheet.col_values(2))
+    gabarito = gabarito_sheet.get_all_values()
+    
     content['tabela'] = resultados_html
     content['rodada'] = RODADA
     return render(request, 'index.html',content)
@@ -22,11 +24,17 @@ def classificacao_rodada(request):
     content['rodada'] = RODADA
     palpites_sheet, gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','palpites_gabarito', RODADA)
     #placares = list()
+    palpites = palpites_sheet.get_all_values()
+    gabarito = gabarito_sheet.get_all_values()
+    #nome = [[a for a in x if a == x[2]] for x in palpites[1:]]
+    print(gabarito)
+    
     i = 0
-    for a in gabarito_sheet.col_values(2):
+    #for a in gabarito_sheet.col_values(2):
+    for a in gabarito:
         if (a == "-"):
             i = i+1
-            if(i == len(gabarito_sheet.col_values(2))):
+            if(i == len(gabarito)):
                 content['tables'] = '<p style="text-align:central"> A Rodada ainda não começou. </p>'
             return render(request, 'classificacao_rodada.html',content)
         else:
@@ -34,24 +42,28 @@ def classificacao_rodada(request):
     
     df_format = False
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
-    content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
+    #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
+    content['tables'] = Main.get_boletins(gabarito,palpites, df_format)
     return render(request, 'classificacao_rodada.html',content)
 
 def classificacao_mes(request):
     content = {}
     palpites_sheet, gabarito_sheet, classificacao_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', RODADA)
     df_format = True
+    gabarito = gabarito_sheet.get_all_values()
+    palpites = palpites_sheet.get_all_values()
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
-    nomes_dict = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
-    
+    nomes_dict = Main.get_boletins(gabarito,palpites, df_format)
+    #nomes_dict = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
+
     #classificacao = return_class_cmplt(nomes_dict,classificacao_sheet)
     return_class_cmplt(nomes_dict,classificacao_sheet)
     
     classificacao_mes_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', MES)
     
-    valores = list(classificacao_mes_sheet.get('A2:G'))
-    print(valores)
-    valores = [[x if x == a[0] else int(x) for x  in a] for a in valores]
+    valores = classificacao_mes_sheet.get_all_values()
+    
+    valores = [[x if x == a[0] else int(x) for x  in a] for a in valores[1:]]
 
     classificacao_mes = DataFrame(valores,columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     classificacao_mes = classificacao_mes.sort_values(by=['Pontos Totais', '10 pontos', '7 pontos', '0 pontos', '5 pontos', '2 pontos'],ascending=[0,0,0,1,0,0])

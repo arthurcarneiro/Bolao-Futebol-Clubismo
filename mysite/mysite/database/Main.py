@@ -64,14 +64,20 @@ def get_boletins(gabarito,palpites,df_format):
     #boletins = {}
     boletins = []
     pontos_totais = []
-    nomes = palpites.col_values(3)[1:]
+    #nomes = palpites.col_values(3)[1:]
+    nomes = [ a for x in palpites[1:] for a in x if a == x[2]]
+    jogos = [a  for x in gabarito for a in x if a == x[0]]
+    res_gabarito = [a for x in gabarito for a in x if a == x[1]]
     nomes_dict = {}
     
     if (df_format == True):
         #for i in range(0,len(nomes)-1): #>>>>>Feito no Arquivo de testes<<<<
         for i in range(0,len(nomes)): #Feito na bundesliga evento teste
             #lista, pontos_temp = return_rodada(sheet1.row_values(1)[3:],sheet1.row_values(i+2),gabarito.col_values(2))
-            lista, pontos_temp = return_rodada(gabarito.col_values(1),palpites.row_values(i+2),gabarito.col_values(2))
+            #lista, pontos_temp = return_rodada(gabarito.col_values(1),palpites.row_values(i+2),gabarito.col_values(2))
+            lista, pontos_temp = return_rodada(jogos,palpites[i+1],res_gabarito)
+            
+            
             pontos_totais.append(pontos_temp)
 
 
@@ -86,7 +92,8 @@ def get_boletins(gabarito,palpites,df_format):
     else:
         for i in range(0,len(nomes)): #Feito na bundesliga evento teste
             #lista, pontos_temp = return_rodada(sheet1.row_values(1)[3:],sheet1.row_values(i+2),gabarito.col_values(2))
-            lista, pontos_temp = return_rodada(gabarito.col_values(1),palpites.row_values(i+2),gabarito.col_values(2))
+            #lista, pontos_temp = return_rodada(gabarito.col_values(1),palpites.row_values(i+2),gabarito.col_values(2))
+            lista, pontos_temp = return_rodada(jogos,palpites[i+1],res_gabarito)
             pontos_totais.append(pontos_temp)
 
 

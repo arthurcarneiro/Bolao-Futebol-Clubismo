@@ -2,6 +2,7 @@ from mysite.database.return_pts import return_pts
 #from return_pts import return_pts  
 def return_rodada(jogos, resultados_pessoa,gabarito):
     pontuacao = 0
+    
     #resultados = [[int(x) for x in a] for a in [k.split('x') for k in resultados_pessoa[3:3+len(gabarito)]]]
     resultados = [[-1,-1] if a == [''] else [int(x) for x in a] for a in [k.split('x') 
     for k in resultados_pessoa[3:3+len(gabarito)]]]
