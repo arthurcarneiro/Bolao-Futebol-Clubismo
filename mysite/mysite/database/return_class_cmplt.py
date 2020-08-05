@@ -21,13 +21,15 @@ def return_class_cmplt(nomes_dict, classificacao):
         pontos_detalhados_temp = [k, v['Pontos'], v['Tabela']['Pontos'].tolist().count(10), v['Tabela']['Pontos'].tolist().count(7), v['Tabela']['Pontos'].tolist().count(5), v['Tabela']['Pontos'].tolist().count(2), v['Tabela']['Pontos'].tolist().count(0)]
         pontos_detalhados.append(pontos_detalhados_temp)
     
+    
+    
     #pontos_detalhados = array(pontos_detalhados)
     ''' O trecho acima percorre o dicionário boletins a partir do seu conteudo e conta cada ocorrencia de 
      Pontuações de 10,7,5,2 e 0 pontos. Posteriormente a lista pontos_detalhados é convertida em um array.'''
     
     Pontos_df = DataFrame(pontos_detalhados, columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     '''Formado o dataframe Pontos_df com os pontos por participante organizado em colunas.'''
-    
+    print(Pontos_df)
     #classificacao_completa = concat([classificacao,Pontos_df], axis=1)
     ''' O dataframe classificacao é concatenado com Pontos_df para formar a classificação completa
         Com todos os critérios de desempate especificados, entretanto não ordenados.'''

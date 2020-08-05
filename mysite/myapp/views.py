@@ -19,11 +19,22 @@ def index(request):
 
 def classificacao_rodada(request):
     content = {}
+    content['rodada'] = RODADA
     palpites_sheet, gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','palpites_gabarito', RODADA)
+    #placares = list()
+    i = 0
+    for a in gabarito_sheet.col_values(2):
+        if (a == "-"):
+            i = i+1
+            if(i == len(gabarito_sheet.col_values(2))):
+                content['tables'] = '<p style="text-align:central"> A Rodada ainda não começou. </p>'
+            return render(request, 'classificacao_rodada.html',content)
+        else:
+            break
+    
     df_format = False
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
     content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
-    content['rodada'] = RODADA
     return render(request, 'classificacao_rodada.html',content)
 
 def classificacao_mes(request):
@@ -39,9 +50,10 @@ def classificacao_mes(request):
     classificacao_mes_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', MES)
     
     valores = list(classificacao_mes_sheet.get('A2:G'))
+    print(valores)
     valores = [[x if x == a[0] else int(x) for x  in a] for a in valores]
 
-    classificacao_mes = DataFrame(valores),columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
+    classificacao_mes = DataFrame(valores,columns=['Nome', 'Pontos Totais', '10 pontos', '7 pontos', '5 pontos', '2 pontos', '0 pontos'])
     classificacao_mes = classificacao_mes.sort_values(by=['Pontos Totais', '10 pontos', '7 pontos', '0 pontos', '5 pontos', '2 pontos'],ascending=[0,0,0,1,0,0])
     
     classificacao_mes.index = [i+1 for i in range(0, len(classificacao_mes.values))]
