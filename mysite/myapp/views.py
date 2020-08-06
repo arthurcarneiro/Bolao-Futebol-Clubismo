@@ -5,7 +5,7 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Evento Teste"
+RODADA = "Rodada 1"
 MES = "Agosto/2020"
 
 # Create your views here.
@@ -13,7 +13,7 @@ def index(request):
     content = {}
     gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','gabarito', RODADA)
     resultados_html = return_games(gabarito_sheet.col_values(1), gabarito_sheet.col_values(2))
-    gabarito = gabarito_sheet.get_all_values()
+    #gabarito = gabarito_sheet.get_all_values()
     
     content['tabela'] = resultados_html
     content['rodada'] = RODADA
@@ -27,12 +27,11 @@ def classificacao_rodada(request):
     palpites = palpites_sheet.get_all_values()
     gabarito = gabarito_sheet.get_all_values()
     #nome = [[a for a in x if a == x[2]] for x in palpites[1:]]
-    print(gabarito)
-    
+
     i = 0
     #for a in gabarito_sheet.col_values(2):
     for a in gabarito:
-        if (a == "-"):
+        if (a[1] == "-"):
             i = i+1
             if(i == len(gabarito)):
                 content['tables'] = '<p style="text-align:central"> A Rodada ainda não começou. </p>'
