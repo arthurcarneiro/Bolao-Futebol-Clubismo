@@ -92,12 +92,12 @@ def prox_rodada(request):
 def rodada_seguinte(request):
     content = {}
     content['rodada'] = RODADA
-    return render(request, 'rodada_depois.html',content)
+    return render(request, 'rodada_seguinte.html',content)
 
 def rodada_depois(request):
     content = {}
     content['rodada'] = RODADA
-    return render(request, 'rodada_seguinte.html',content)
+    return render(request, 'rodada_depois.html',content)
 
 def regulamento(request):
     content = {}
