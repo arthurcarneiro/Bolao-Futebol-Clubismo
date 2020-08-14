@@ -5,7 +5,7 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 2"
+RODADA = "Rodada 3"
 MES = "Agosto/2020"
 
 # Create your views here.
@@ -24,8 +24,14 @@ def classificacao_rodada(request):
     content['rodada'] = RODADA
     palpites_sheet, gabarito_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json','palpites_gabarito', RODADA)
     #placares = list()
+    cadastro_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', "Cadastro")
+
     palpites = palpites_sheet.get_all_values()
     gabarito = gabarito_sheet.get_all_values()
+    cadastro = cadastro_sheet.get_all_values()
+
+    cadastro_dict = {int(d[2]): d[1] for d in cadastro[1:]}
+    #print(palpites)
     #nome = [[a for a in x if a == x[2]] for x in palpites[1:]]
 
     i = 0
@@ -42,17 +48,27 @@ def classificacao_rodada(request):
     df_format = False
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
-    content['tables'] = Main.get_boletins(gabarito,palpites, df_format)
+    content['tables'] = Main.get_boletins(gabarito,palpites,cadastro_dict, df_format)
     return render(request, 'classificacao_rodada.html',content)
 
 def classificacao_mes(request):
     content = {}
     palpites_sheet, gabarito_sheet, classificacao_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', RODADA)
     df_format = True
+    cadastro_sheet = Main.get_data('mysite/database/BolaoFutebolClubismo-d44be1b6b394.json', '', "Cadastro")
+    
     gabarito = gabarito_sheet.get_all_values()
     palpites = palpites_sheet.get_all_values()
+    cadastro = cadastro_sheet.get_all_values()
+
+    cadastro_dict = {int(d[2]): d[1] for d in cadastro[1:]}
+    
+    
+
+    
+    #print(cadastro_dict[int(codigo_part)])
     #content['tables'] = Main.get_boletins(gabarito_sheet,palpites_sheet)
-    nomes_dict = Main.get_boletins(gabarito,palpites, df_format)
+    nomes_dict = Main.get_boletins(gabarito,palpites,cadastro_dict, df_format)
     #nomes_dict = Main.get_boletins(gabarito_sheet,palpites_sheet, df_format)
 
     #classificacao = return_class_cmplt(nomes_dict,classificacao_sheet)

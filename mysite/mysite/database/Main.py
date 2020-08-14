@@ -11,11 +11,11 @@ from mysite.database.return_class_cmplt import return_class_cmplt
 #from return_boletins import return_boletins
 #from return_games import return_games
 
-RODADA = "Evento Teste"
+
 MES = "Agosto/2020"
 
 def get_data(chave,requisicao, planilha):
-# use creds to create a client to interact with the Google Drive API
+    # use creds to create a client to interact with the Google Drive API
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     #creds = ServiceAccountCredentials.from_json_keyfile_name('BolaoFutebolClubismo-d44be1b6b394.json', scope)
     creds = ServiceAccountCredentials.from_json_keyfile_name(chave, scope)
@@ -31,6 +31,10 @@ def get_data(chave,requisicao, planilha):
     if(planilha == MES):
         classificacao = sheet.sheet1
         return classificacao
+    
+    if (planilha == "Cadastro"):
+        cadastro = sheet.sheet1
+        return cadastro
     
     if (requisicao == 'palpites'):
         sheet1 = sheet.sheet1 
@@ -60,7 +64,7 @@ def get_data(chave,requisicao, planilha):
 
 
 #def get_boletins(gabarito,palpites):
-def get_boletins(gabarito,palpites,df_format):
+def get_boletins(gabarito,palpites,cadastro_dict,df_format):
     #boletins = {}
     boletins = []
     pontos_totais = []
@@ -68,6 +72,7 @@ def get_boletins(gabarito,palpites,df_format):
     nomes = [ a for x in palpites[1:] for a in x if a == x[2]]
     jogos = [a  for x in gabarito for a in x if a == x[0]]
     res_gabarito = [a for x in gabarito for a in x if a == x[1]]
+    codigo_index = palpites[0].index('Código')
     nomes_dict = {}
     
     if (df_format == True):
@@ -88,7 +93,11 @@ def get_boletins(gabarito,palpites,df_format):
             boletins[i] = boletins[i].replace('<tr style="text-align: right;">', '<tr>')
             boletins[i] = boletins[i].replace('<tbody>', '<tbody  style="text-align: center;">')
             boletins[i] = boletins[i].replace("\n", "")'''
-            nomes_dict.update({nomes[i] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            #nomes_dict.update({nomes[i] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            try:
+                nomes_dict.update({cadastro_dict[int(palpites[i+1][codigo_index])] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            except  KeyError:
+                nomes_dict.update({palpites[i+1][codigo_index] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
     else:
         for i in range(0,len(nomes)): #Feito na bundesliga evento teste
             #lista, pontos_temp = return_rodada(sheet1.row_values(1)[3:],sheet1.row_values(i+2),gabarito.col_values(2))
@@ -104,7 +113,13 @@ def get_boletins(gabarito,palpites,df_format):
             boletins[i] = boletins[i].replace('<tr style="text-align: right;">', '<tr>')
             boletins[i] = boletins[i].replace('<tbody>', '<tbody  style="text-align: center;">')
             boletins[i] = boletins[i].replace("\n", "")
-            nomes_dict.update({nomes[i] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            #nomes_dict.update({nomes[i] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            try:
+                nomes_dict.update({cadastro_dict[int(palpites[i+1][codigo_index])] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+            except  KeyError:
+                nomes_dict.update({palpites[i+1][codigo_index] : {'Pontos': pontos_totais[i], 'Tabela': boletins[i]}})
+
+
 
     nomes_dict = OrderedDict(sorted(nomes_dict.items(), key = lambda x: getitem(x[1], 'Pontos'), reverse=True))
 
