@@ -30,8 +30,8 @@ SECRET_KEY = 'i1e4a_274&(9q5$@vm%8m_dz&q8)(vkfh(wgp(ndv#x*_ydw4@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-#ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['futeboleclubismo.pythonanywhere.com']
+ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['futeboleclubismo.pythonanywhere.com']
 
 # Application definition
 
