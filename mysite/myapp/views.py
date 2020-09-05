@@ -5,7 +5,7 @@ from mysite.database import Main
 from mysite.database.return_games import return_games
 from mysite.database.return_class_cmplt import return_class_cmplt
 
-RODADA = "Rodada 7"
+RODADA = "Rodada 8"
 MES = "Setembro/2020"
 
 # Create your views here.
