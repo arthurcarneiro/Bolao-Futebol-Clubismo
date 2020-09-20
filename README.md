@@ -1,7 +1,7 @@
 # Futebol e Clubismo Website
 Django Application com informações a respeito do Bolão Futebol e Clubismo. Torneio entre amigos que classifica a partir de pontos diversos palpites do Campeonato Brasileiro.
 
-No mesmo constam informações com as pontuações dos participantes para a rodada, o mês e o campeonato completo.
+No mesmo consta informações com as pontuações dos participantes para a rodada, o mês e o campeonato completo.
 
 A partir deste repositório pode-se atualizar todas as informações para as rodadas do campeonato brasileiro de 2020.
 
